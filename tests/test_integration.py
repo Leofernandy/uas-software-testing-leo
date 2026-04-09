@@ -149,3 +149,16 @@ def test_api_invalid_token_decode(client):
     headers = {"Authorization": "Bearer format.yang.salah"}
     res = client.get('/api/tasks', headers=headers)
     assert res.status_code == 401 
+
+def test_api_create_task_with_description(client):
+    client.post('/api/register', json={"email": "desc@test.com", "password": "password123"})
+    token = client.post('/api/login', json={"email": "desc@test.com", "password": "password123"}).get_json()["token"]
+    headers = {"Authorization": f"Bearer {token}"}
+    
+    res = client.post('/api/tasks', json={
+        "title": "Tugas Deskripsi", 
+        "description": "Ini adalah deskripsi tugas"
+    }, headers=headers)
+    
+    assert res.status_code == 201
+    assert res.get_json()["success"] is True
