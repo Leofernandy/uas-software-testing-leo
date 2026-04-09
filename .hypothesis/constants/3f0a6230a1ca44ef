@@ -1,0 +1,4 @@
+# file: /Users/leofernandy/uas-software-testing-leo/src/task_service.py
+# hypothesis_version: 6.151.12
+
+['%Y-%m-%d', 'Status diperbarui', 'Status tidak valid', 'Tugas dihapus', 'deadline', 'done', 'id', 'in_progress', 'is_overdue', 'message', 'pending', 'status', 'success', 'title']

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Task App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5" id="authSection" style="max-width: 400px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="text-center mb-4 text-primary">Login / Register</h3>
+            <form id="authForm">
+                <input type="email" id="email" class="form-control mb-3" placeholder="Email" required>
+                <input type="password" id="password" class="form-control mb-3" placeholder="Password (Min 8)" required>
+                <button type="button" class="btn btn-primary w-100 mb-2" onclick="handleAuth('/api/login')">Login</button>
+                <button type="button" class="btn btn-outline-secondary w-100" onclick="handleAuth('/api/register')">Register Baru</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5" id="appSection" style="max-width: 600px; display: none;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Task Management</h2>
+        <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
+    </div>
+    
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form id="taskForm" class="row g-2">
+                <div class="col-8">
+                    <input type="text" id="title" class="form-control" placeholder="Judul Tugas Baru..." required>
+                </div>
+                <div class="col-4">
+                    <input type="date" id="deadline" class="form-control">
+                </div>
+                <div class="col-12 mt-2">
+                    <button type="submit" class="btn btn-success w-100">Tambah Tugas</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <ul class="list-group shadow-sm" id="taskList"></ul>
+</div>
+
+<script>
+    // FUNGSI INTI: Mengatur Token JWT
+    const getToken = () => localStorage.getItem('jwt_token');
+    const setToken = (token) => localStorage.setItem('jwt_token', token);
+    const clearToken = () => localStorage.removeItem('jwt_token');
+
+    // Cek Login Saat Buka Web
+    window.onload = () => {
+        if (getToken()) {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('appSection').style.display = 'block';
+            fetchTasks();
+        }
+    };
+
+    function logout() {
+        clearToken();
+        location.reload();
+    }
+
+    // FUNGSI AUTH (Login/Register)
+    async function handleAuth(endpoint) {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email, password})
+        });
+        const data = await res.json();
+        
+        if (res.ok) {
+            if(endpoint === '/api/login') {
+                setToken(data.token);
+                location.reload();
+            } else {
+                alert("Registrasi sukses! Silakan klik tombol Login.");
+            }
+        } else {
+            alert("Error: " + data.error);
+        }
+    }
+
+    // FUNGSI API TUGAS
+    async function fetchTasks() {
+        const res = await fetch('/api/tasks', { headers: {'Authorization': `Bearer ${getToken()}`} });
+        if(res.status === 401) return logout(); // Kalau token basi, usir ke login
+        
+        const data = await res.json();
+        const list = document.getElementById('taskList');
+        list.innerHTML = '';
+        
+        data.data.forEach(task => {
+            const isDone = task.status === 'done';
+            const badge = task.is_overdue ? '<span class="badge bg-danger ms-2">OVERDUE</span>' : '';
+            
+            list.innerHTML += `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0" style="${isDone ? 'text-decoration: line-through;' : ''}">${task.title} ${badge}</h6>
+                        <small class="text-muted">Deadline: ${task.deadline || '-'}</small>
+                    </div>
+                    <div>
+                        ${!isDone ? `<button class="btn btn-sm btn-outline-success me-1" onclick="updateTask(${task.id})">✔</button>` : ''}
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${task.id})">✖</button>
+                    </div>
+                </li>
+            `;
+        });
+    }
+
+    document.getElementById('taskForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('title').value;
+        const deadline = document.getElementById('deadline').value;
+        
+        const res = await fetch('/api/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${getToken()}`
+            },
+            body: JSON.stringify({title, deadline})
+        });
+        
+        if(res.ok) {
+            document.getElementById('taskForm').reset();
+            fetchTasks();
+        } else {
+            alert("Error: " + (await res.json()).error);
+        }
+    };
+
+    async function updateTask(id) {
+        await fetch(`/api/tasks/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${getToken()}`},
+            body: JSON.stringify({status: 'done'})
+        });
+        fetchTasks();
+    }
+
+    async function deleteTask(id) {
+        if(confirm("Hapus tugas ini?")) {
+            await fetch(`/api/tasks/${id}`, {
+                method: 'DELETE',
+                headers: {'Authorization': `Bearer ${getToken()}`}
+            });
+            fetchTasks();
+        }
+    }
+</script>
+</body>
+</html>
