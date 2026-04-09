@@ -5,6 +5,7 @@
 ![Tests](https://img.shields.io/badge/Tests-Passing-success)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?logo=github-actions&logoColor=white)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
+
 Aplikasi manajemen tugas berbasis **Flask (backend)** dan **Modern Vanilla JavaScript + Bootstrap (frontend)** yang dirancang dengan fokus pada **kualitas perangkat lunak**, menggunakan pendekatan **Test-Driven Development (TDD)** dan target **100% test coverage**.
 
 ---
