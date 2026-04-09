@@ -1,7 +1,7 @@
 # 🚀 ProTask Manager
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-Backend-000000?logo=flask&logoColor=white)
-![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen)
+[![codecov](https://codecov.io/github/Leofernandy/uas-software-testing-leo/graph/badge.svg?token=HVUJ3CTAU3)](https://codecov.io/github/Leofernandy/uas-software-testing-leo)
 ![Tests](https://img.shields.io/badge/Tests-Passing-success)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?logo=github-actions&logoColor=white)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
