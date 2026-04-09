@@ -2,7 +2,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-Backend-000000?logo=flask&logoColor=white)
 [![codecov](https://codecov.io/github/Leofernandy/uas-software-testing-leo/graph/badge.svg?token=HVUJ3CTAU3)](https://codecov.io/github/Leofernandy/uas-software-testing-leo)
-![Tests](https://img.shields.io/badge/Tests-Passing-success)
+[![CI Pipeline](https://github.com/Leofernandy/uas-software-testing-leo/actions/workflows/ci.yml/badge.svg)](https://github.com/Leofernandy/uas-software-testing-leo/actions/workflows/ci.yml)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?logo=github-actions&logoColor=white)
 ![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
