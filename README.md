@@ -1,4 +1,4 @@
-# 🚀 ProTask Manager: Full-Stack Task System
+# 🚀 ProTask Manager
 
 Aplikasi manajemen tugas berbasis **Flask (backend)** dan **Modern Vanilla JavaScript + Bootstrap (frontend)** yang dirancang dengan fokus pada **kualitas perangkat lunak**, menggunakan pendekatan **Test-Driven Development (TDD)** dan target **100% test coverage**.
 
@@ -6,7 +6,7 @@ Aplikasi manajemen tugas berbasis **Flask (backend)** dan **Modern Vanilla JavaS
 
 ## 📋 Deskripsi Sistem
 
-**ProTask Manager** membantu pengguna mengelola siklus hidup tugas secara efisien dengan fitur utama:
+**ProTask Manager** membantu pengguna mengelola tugas secara efisien dengan fitur utama:
 
 - ✅ **Manajemen Tugas (CRUD)**  
   Membuat, membaca, memperbarui, dan menghapus tugas dengan atribut:
