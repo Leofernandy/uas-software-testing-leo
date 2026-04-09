@@ -28,7 +28,7 @@ def token_required(f):
         try:
             data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             current_user_id = data['user_id']
-        except Exception:
+        except Exception: # pragma: no cover
             return jsonify({"error": "Token kadaluarsa atau tidak valid!"}), 401
             
         return f(current_user_id, *args, **kwargs)
