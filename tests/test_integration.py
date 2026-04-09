@@ -162,3 +162,30 @@ def test_api_create_task_with_description(client):
     
     assert res.status_code == 201
     assert res.get_json()["success"] is True
+
+def test_full_status_lifecycle(client):
+    # 1. Login & Buat Tugas
+    client.post('/api/register', json={"email": "life@test.com", "password": "password123"})
+    token = client.post('/api/login', json={"email": "life@test.com", "password": "password123"}).get_json()["token"]
+    headers = {"Authorization": f"Bearer {token}"}
+    
+    res_create = client.post('/api/tasks', json={"title": "Life Cycle"}, headers=headers)
+    task_id = res_create.get_json()["data"]["id"]
+    
+    # 2. Ubah ke In Progress
+    client.put(f'/api/tasks/{task_id}', json={"status": "in_progress"}, headers=headers)
+    
+    # 3. Ubah ke Done
+    res_final = client.put(f'/api/tasks/{task_id}', json={"status": "done"}, headers=headers)
+    json_data = res_final.get_json()
+    assert res_final.status_code == 200
+    assert json_data["success"] is True
+    assert json_data["message"] == "Status diperbarui"
+
+def test_api_get_tasks_empty(client):
+    client.post('/api/register', json={"email": "empty@test.com", "password": "password123"})
+    token = client.post('/api/login', json={"email": "empty@test.com", "password": "password123"}).get_json()["token"]
+    
+    res = client.get('/api/tasks', headers={"Authorization": f"Bearer {token}"})
+    assert res.status_code == 200
+    assert res.get_json()["data"] == []

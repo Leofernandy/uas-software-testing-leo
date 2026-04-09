@@ -72,3 +72,12 @@ def test_pbt_whitespace_title_rejected(invalid_title):
 def test_pbt_long_title_rejected(long_title):
     with pytest.raises(ValueError, match="maksimal 200 karakter"):
         validate_title(long_title)
+
+@pytest.mark.parametrize("brutal_text", [
+    "A" * 1000,           # Ini pasti kena (karena > 200)
+    "😊" * 300,            # Ini sekarang pasti kena (karena > 200)
+    "Title" + "Z" * 200   # Ini juga pasti kena
+])
+def test_brutal_input_validation(brutal_text):
+    with pytest.raises(ValueError, match="maksimal 200 karakter"):
+        validate_title(brutal_text)
