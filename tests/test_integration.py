@@ -134,3 +134,18 @@ def test_api_method_not_allowed(client):
     # Mengirim request DELETE ke rute yang cuma nerima GET/POST
     res = client.delete('/api/register')
     assert res.status_code == 405 # Method Not Allowed
+
+def test_api_auth_missing_fields(client):
+    # Test Register tanpa data
+    res = client.post('/api/register', json={})
+    assert res.status_code == 400
+    
+    # Test Login tanpa data
+    res = client.post('/api/login', json={})
+    assert res.status_code == 401
+
+def test_api_invalid_token_decode(client):
+    # Test kirim token yang formatnya benar tapi isinya sampah (Trigger baris 40)
+    headers = {"Authorization": "Bearer format.yang.salah"}
+    res = client.get('/api/tasks', headers=headers)
+    assert res.status_code == 401 

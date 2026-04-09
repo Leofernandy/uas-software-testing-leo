@@ -103,5 +103,5 @@ def delete_task(current_user_id, task_id):
     except PermissionError as e:
         return jsonify({"error": str(e)}), 403
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     app.run(debug=True)

@@ -1,0 +1,4 @@
+# file: /Users/leofernandy/uas-software-testing-leo/src/app.py
+# hypothesis_version: 6.151.12
+
+[200, 201, 400, 401, 403, 500, '/', '/api/login', '/api/register', '/api/tasks', 'Authorization', 'Bearer', 'DELETE', 'GET', 'HS256', 'POST', 'PUT', '__main__', 'data', 'deadline', 'description', 'email', 'error', 'index.html', 'password', 'status', 'success', 'title', 'user_id']
