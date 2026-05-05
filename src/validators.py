@@ -5,7 +5,7 @@ def validate_email(email):
     if not email or not isinstance(email, str):
         raise ValueError("Email tidak boleh kosong")
         
-    # REGEX: Aturan baku format email sedunia (mengatasi spasi, tanpa nama, dll)
+    
     email_regex = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
     if not re.match(email_regex, email.strip()):
         raise ValueError("Format email tidak valid")
