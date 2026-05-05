@@ -156,7 +156,7 @@ pytest --cov=src --cov-report=term-missing
 
 ### 🔐 Security Testing
 - Endpoint tanpa token → **401 Unauthorized**
-- Akses task user lain → **403 Forbidden**
+- Akses task pengguna lain → **403 Forbidden**
 
 ---
 
