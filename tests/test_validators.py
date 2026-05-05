@@ -2,7 +2,7 @@ import pytest
 from hypothesis import given, strategies as st
 from src.validators import validate_title, validate_email, validate_password, validate_deadline
 
-# ==========================================
+
 # 1. PARAMETERIZED TESTS (MELIPATGANDAKAN TEST CASE)
 # ==========================================
 
